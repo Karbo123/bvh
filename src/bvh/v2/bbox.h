@@ -31,7 +31,8 @@ struct BBox {
 
     BVH_ALWAYS_INLINE T get_half_area() const {
         auto d = get_diagonal();
-        static_assert(N == 2 || N == 3);
+        static_assert(N == 2 || N == 3 || N == 4);
+        if constexpr (N == 4) return d[0] * d[1] * (d[2] + d[3]) + d[2] * d[3] * (d[0] + d[1]);
         if constexpr (N == 3) return (d[0] + d[1]) * d[2] + d[0] * d[1];
         if constexpr (N == 2) return d[0] + d[1];
         return static_cast<T>(0.);
